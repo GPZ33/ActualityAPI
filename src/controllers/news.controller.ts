@@ -38,8 +38,8 @@ export const GetActualityById = async (req: Request, res: Response) => {
 
 export const UpdateTitleActuality = async (req: Request, res: Response) => {
     const actualityId = req.params.id;
-    const title = req.params.title;
-    
+    const title = req.body.title;
+    console.log("testttttt",req.body.title)
     try {
         const updateTitle = await newsService.UpdateTitleActuality(actualityId, title)
         console.log ("controlleur titre", updateTitle)
@@ -48,4 +48,4 @@ export const UpdateTitleActuality = async (req: Request, res: Response) => {
         res.status(500).send('error bordel')
         console.log(error);
     }
-} 
+}
