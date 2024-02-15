@@ -44,3 +44,32 @@ export const UpdateTitleActuality = async (id: string, title: string) => {
         throw error
     }
 }
+
+export const UpdateDescriptionActuality = async (id: string, description: string) => {
+    try {
+        const updateDescription = await actualityRepository.UpdateDescriptionActuality(id, description)
+        console.log(updateDescription)
+        return updateDescription;
+    } catch (error) {
+        throw error
+    }
+}
+
+export const DeleteActualityById = async (title: string) => {
+    try {
+        const deleteById = await actualityRepository.DeleteActualityById(title)
+        console.log("service",deleteById)
+        return deleteById;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const GetNewsWithFilters = async (filters: any) => {
+    try {
+        const newsWhitFilters = await actualityRepository.GetNewsWithFilters(filters);
+        return newsWhitFilters;
+    } catch (error) {
+        throw error;
+    }
+}

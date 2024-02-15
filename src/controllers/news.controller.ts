@@ -49,3 +49,67 @@ export const UpdateTitleActuality = async (req: Request, res: Response) => {
         console.log(error);
     }
 }
+
+export const UpdateDescriptionActuality = async (req: Request, res: Response) => {
+    const actualityId = req.params.id;
+    const description = req.body.description;
+    console.log(req.body.description)
+    try {
+        const updateDescription = await newsService.UpdateDescriptionActuality(actualityId, description)
+        res.status(201).send(updateDescription);
+    } catch (error) {
+        res.status(500).send('error bordel')
+        console.log(error);
+    }
+}
+
+export const DeleteActualityById = async (req: Request, res: Response) => {
+    const deleteActuality = req.body.title;
+    try {
+        const deleteById = await newsService.DeleteActualityById(deleteActuality);
+        console.log(deleteById)
+        res.status(201).send(deleteById);
+    } catch (error) {
+        res.status(500).send('error bordel')
+        console.log(error);
+    }
+}
+
+export const GetNewsWithFilters = async (req: Request, res: Response) => {
+    const { auteur, title, date, keywords } = req.query;
+    
+    try {
+        const filters: any = {};
+        if (auteur) {
+            // Vérifie si l'auteur est parmi les valeurs autorisées
+            if (['Jean', 'Aziz', 'Sarah'].includes(auteur as string)) {
+                filters.auteur = auteur;
+            } else {
+                return res.status(400).json({ error: `${auteur} n'est pas un auteur reconnu.` });
+            }
+        }
+
+        if (title) filters.title = title;
+
+        if (date) {
+            // Vérifie si la date est une date valide
+            const parsedDate = new Date(date as string);
+            if (!isNaN(parsedDate.getTime())) {
+                filters.date = parsedDate;
+            } else {
+                return res.status(400).json({ error: 'Format de date invalide.' });
+            }
+        }
+
+        if (keywords) {
+            // Recherche des mots-clés dans la description
+            filters.description = { $regex: new RegExp(keywords as string, 'i') };
+        }
+
+        const filteredNews = await newsService.GetNewsWithFilters(filters);
+        res.status(200).json(filteredNews);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Erreur lors de la récupération des actualités avec filtres.');
+    }
+};

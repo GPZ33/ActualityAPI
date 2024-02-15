@@ -6,6 +6,16 @@ export const ActualitySchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    auteur: {
+        type: String,
+        required: true,
+        validate: {
+            validator: (content: any) => {
+                return ['Jean', 'Aziz', 'Sarah'].includes(content)
+            },
+            message: (props: { value: string }) => `${props.value} n'est pas un auteur reconnu`
+        }
+    },
     date: {
         type: Date,
         required: true
@@ -13,5 +23,8 @@ export const ActualitySchema = new mongoose.Schema({
     description: {
         type: String,
         required: true
+    },
+    genre: {
+        type: String
     }
 })
