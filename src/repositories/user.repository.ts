@@ -13,7 +13,7 @@ export const CreateUser = async (user: any) => {
 
  export const GetUserByEmail = async (email: any) => {
     try {
-        const user = await UserModel.findOne(email)
+        const user = await UserModel.findOne({email})
         return user;
     } catch (error) {
         throw error

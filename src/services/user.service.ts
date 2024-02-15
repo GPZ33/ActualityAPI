@@ -14,7 +14,7 @@ export const createUser = async (user: any) => {
         throw error;
     }
 }
-
+// Creer une nouvelle fonctionallité pour remplacer {email} par email
 export const getUserByEmail = async (email: any) => {
     try {
         const user = await userRepository.GetUserByEmail(email);
