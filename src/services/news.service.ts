@@ -28,12 +28,13 @@ export const GetAllNews = async () => {
 
 export const GetActualityById = async (id: string) => {
     try {
-    const taskById = await actualityRepository.GetActualityById(id) 
-    return taskById       
+    const actualitykById = await actualityRepository.GetActualityById(id)
+    return actualitykById      
     } catch (error) {
         throw error
     }
 }
+
 
 export const UpdateTitleActuality = async (id: string, title: string) => {
     try {

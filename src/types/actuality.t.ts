@@ -1,13 +1,15 @@
 export interface ActualityCreation {
-    id: Number,
+    id: string,
     title: string,
     date: Date,
-    description: string
+    description: string,
+    genre: string
 }
 
 export type ActualityFinal = {
-    id: Number,
+    id: string,
     title: string,
     date: Date,
-    description: string
+    description: string,
+    genre: string
 }

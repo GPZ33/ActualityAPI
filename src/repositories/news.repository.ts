@@ -1,5 +1,5 @@
 import { ActualityModel } from "../database/models/actuality.model";
-import { ActualityCreation } from "../types/actuality.t";
+import { ActualityCreation, ActualityFinal } from "../types/actuality.t";
 
 export const CreateActuality = async (actuality : ActualityCreation) => {
     try {
@@ -24,12 +24,35 @@ export const CreateActuality = async (actuality : ActualityCreation) => {
 export const GetActualityById = async (id: string) => {
     try {
         const actualityById = await ActualityModel.findById(id).exec()
-        return actualityById;
+
+        if(!actualityById) {
+            return null;
+        }
+        const category = actualityById.genre;
+        const randomActuality = await ActualityModel.aggregate([
+            {$match: {genre: category, _id: {$ne: actualityById._id }}},
+            {$sample: {size: 3}}
+        ])
+        return {actualityById, suggestions: randomActuality};
     } catch (error) {
         throw error
     }
 }
 
+/*export const GetSuggestionsForActuality = async (actualityById: any) => {
+    try {
+        if(!actualityById) {
+            return null;
+        }
+        const category = actualityById.genre;
+        const randomActuality = await ActualityModel.aggregate([
+            {$match: {genre: category, _id: {$ne: actualityById.id }}},
+            {$sample: {size: 3}}
+        ])
+    } catch (error) {
+        throw error;
+    }
+}*/
 export const UpdateTitleActuality = async (id: string, title: string) => {
     try {
         const updateTitle = await ActualityModel.findByIdAndUpdate(id, {title})
