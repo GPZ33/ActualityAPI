@@ -4,8 +4,8 @@ import { Request, Response } from 'express';
 export const createUser = async (req: Request, res: Response) => {
 
     try {
-        const {email, password, statut} = req.body
-        const newUser = await userService.createUser({email, password, statut})
+        const {email, password, isAdmin} = req.body
+        const newUser = await userService.createUser({email, password, isAdmin})
         res.status(201).send(newUser);
     } catch (error) {
         res.status(500).send('error')

@@ -10,8 +10,8 @@ export const UserSchema = new mongoose.Schema ({
         type: String,
         required: true
     },
-    statut: {
-        type: String,
+    isAdmin: {
+        type: Boolean,
         required: true
     }
 })

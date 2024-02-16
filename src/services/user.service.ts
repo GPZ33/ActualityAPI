@@ -8,7 +8,7 @@ export const createUser = async (user: any) => {
         const existingUser = await userRepository.GetUserByEmail(user.email)
         if (existingUser) throw new Error('Email existe déjà')
 
-        const newUser = await userRepository.CreateUser({email: user.email, password: hashedPassword, statut: user.statut})
+        const newUser = await userRepository.CreateUser({email: user.email, password: hashedPassword, isAdmin: user.isAdmin})
         return newUser;
     } catch (error) {
         throw error;

@@ -13,7 +13,10 @@ export const login = async (email: string, password: string) => {
 
         if (!isCorrectPassword) throw new Error('password not correct')
 
-        const accessToken = await jwt.sign({email}, jwtConfig.secret, {expiresIn: jwtConfig.expiresIn})
+        // Récupérer le statut d'administrateur de l'utilisateur
+        const isAdmin = user.isAdmin || false;
+
+        const accessToken = await jwt.sign({email, isAdmin}, jwtConfig.secret, {expiresIn: jwtConfig.expiresIn})
         //const refreshToken = jwt.sign(user, jwtConfig.refreshSecret, { expiresIn: jwtConfig.refreshExpiresIn });
         console.log(accessToken)
         return {accessToken};
