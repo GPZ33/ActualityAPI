@@ -4,6 +4,6 @@ import { authAdminMiddleware } from '../middlewares/authAdmin.middleware';
 const router = Router();
 
 router.post('/', authAdminMiddleware, userController.createUser);
-router.get('/',userController.getUserByEmail)
+router.get('/',userController.findUserByEmail)
 
 export default router;

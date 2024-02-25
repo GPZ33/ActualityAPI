@@ -11,9 +11,6 @@ export const CreateActuality = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(500).send('error bordel')
     }
-    // res.status(200).send("task created 222 ");
-   // console.log(task);
-
 }
 
 export const GetAllNews = async (req: Request , res: Response) => {
@@ -21,7 +18,6 @@ export const GetAllNews = async (req: Request , res: Response) => {
         const actuality = await newsService.GetAllNews();
        res.status(201).send(actuality);
     } catch (error) {
-        console.log(error)
         res.status(500).send('error bordel')
     }
 }
@@ -39,27 +35,22 @@ export const GetActualityById = async (req: Request, res: Response) => {
 export const UpdateTitleActuality = async (req: Request, res: Response) => {
     const actualityId = req.params.id;
     const title = req.body.title;
-    console.log("testttttt",req.body.title)
     try {
         const updateTitle = await newsService.UpdateTitleActuality(actualityId, title)
-        console.log ("controlleur titre", updateTitle)
         res.status(201).send(updateTitle);
     } catch (error) {
         res.status(500).send('error bordel')
-        console.log(error);
     }
 }
 
 export const UpdateDescriptionActuality = async (req: Request, res: Response) => {
     const actualityId = req.params.id;
     const description = req.body.description;
-    console.log(req.body.description)
     try {
         const updateDescription = await newsService.UpdateDescriptionActuality(actualityId, description)
         res.status(201).send(updateDescription);
     } catch (error) {
         res.status(500).send('error bordel')
-        console.log(error);
     }
 }
 
@@ -67,11 +58,9 @@ export const DeleteActualityById = async (req: Request, res: Response) => {
     const deleteActuality = req.body.title;
     try {
         const deleteById = await newsService.DeleteActualityById(deleteActuality);
-        console.log(deleteById)
         res.status(201).send(deleteById);
     } catch (error) {
         res.status(500).send('error bordel')
-        console.log(error);
     }
 }
 
@@ -109,7 +98,6 @@ export const GetNewsWithFilters = async (req: Request, res: Response) => {
         const filteredNews = await newsService.GetNewsWithFilters(filters);
         res.status(200).json(filteredNews);
     } catch (error) {
-        console.error(error);
         res.status(500).send('Erreur lors de la récupération des actualités avec filtres.');
     }
 };

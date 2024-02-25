@@ -11,9 +11,6 @@ export const CreateComment = async (comment: CommentCreation) => {
         const comments = await commentRepository.CreateComment(newComment)
         if(!comment) throw new Error ('error creating actuality')
 
-        //const newLog = await logService.CreateLog({ feature: 'task', content: task})
-        //console.log(newLog)
-
         return comments;
     } catch (error) {
         throw error;

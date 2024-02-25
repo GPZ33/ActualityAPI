@@ -6,7 +6,6 @@ export const CreateActuality = async (actuality : ActualityCreation) => {
      const newActuality = await ActualityModel.create(actuality)
      return newActuality
     } catch (error) {
-     console.log(error)
      throw error;
     }
     
@@ -39,20 +38,7 @@ export const GetActualityById = async (id: string) => {
     }
 }
 
-/*export const GetSuggestionsForActuality = async (actualityById: any) => {
-    try {
-        if(!actualityById) {
-            return null;
-        }
-        const category = actualityById.genre;
-        const randomActuality = await ActualityModel.aggregate([
-            {$match: {genre: category, _id: {$ne: actualityById.id }}},
-            {$sample: {size: 3}}
-        ])
-    } catch (error) {
-        throw error;
-    }
-}*/
+
 export const UpdateTitleActuality = async (id: string, title: string) => {
     try {
         const updateTitle = await ActualityModel.findByIdAndUpdate(id, {title})

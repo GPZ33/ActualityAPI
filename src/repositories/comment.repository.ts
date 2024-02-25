@@ -6,7 +6,6 @@ export const CreateComment = async (comment: CommentCreation) => {
      const newComment = await CommentModel.create(comment)
      return newComment
     } catch (error) {
-     console.log(error)
      throw error;
     }
     

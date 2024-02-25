@@ -1,27 +1,37 @@
-import bcrypt from 'bcrypt'
 import * as userRepository from '../repositories/user.repository'
+import * as jwtUtils from '../utils/jwt.utils'
 
 export const createUser = async (user: any) => {
-    const salt = bcrypt.genSaltSync(10)    
-    const hashedPassword = bcrypt.hashSync(user.password, salt)
-    try {
-        const existingUser = await userRepository.GetUserByEmail(user.email)
+    const existingUser = await userRepository.GetUserByEmail(user.email)
         if (existingUser) throw new Error('Email existe déjà')
-
-        const newUser = await userRepository.CreateUser({email: user.email, password: hashedPassword, isAdmin: user.isAdmin})
+    
+        user.password = jwtUtils.hashPassword(user.password);
+    try {
+        const newUser = await userRepository.CreateUser(user)
         return newUser;
     } catch (error) {
         throw error;
     }
 }
-// Creer une nouvelle fonctionallité pour remplacer {email} par email
+
+// Fonctionnalité pour trouver un user via son Email (différence avec {email} comparé à l'autre get)
+export const findUserByEmail = async ({email}: any) => {
+    try {
+        const user = await userRepository.findUserByEmail(email);
+        return user;
+    }
+    catch (error) {
+        throw error;
+    }
+} 
+
+// Fonctionnalité pour trouver un user via son Email pour authentification
 export const getUserByEmail = async (email: any) => {
     try {
         const user = await userRepository.GetUserByEmail(email);
         return user;
     }
     catch (error) {
-        console.log("erreur service", error)
         throw error;
     }
 }
